@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fraud Detection Web App</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: #ffffff;
+        }
+
+        header {
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo svg {
+            margin-right: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        h1 span {
+            color: #77ffd2;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero-content h2 {
+            font-size: 28px;
+            margin: 10px 0;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            background: linear-gradient(to right, #00c9ff, #92fe9d);
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 201, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            background-color: #e6b800;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .hero h2, .transaction-form h2, .testimonials h2, .cta h2 {
+            color: #77ffd2;
+            margin-top: 0;
+        }
+
+        .hero, .transaction-form, .testimonials, .cta {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .transaction-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .input-group input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .transaction-form label {
+            margin: 5px 0 2px;
+            color: #77ffd2;
+            font-size: 0.9em;
+        }
+
+        .transaction-form input {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .transaction-form input:focus {
+            background: rgba(255, 255, 255, 0.25);
+            outline: none;
+            border-color: #77ffd2;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .transaction-form button {
+            padding: 10px 20px;
+            background: linear-gradient(to right, #9C27B0, #E91E63);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .transaction-form button:hover {
+            background-color: #218838;
+        }
+
+        .scrollable-form::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .scrollable-form::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .scrollable-form::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .testimonials blockquote {
+            border-left: 4px solid #77ffd2;
+            background: rgba(0, 0, 0, 0.2);
+            padding-left: 10px;
+            margin: 10px 0;
+        }
+
+        .testimonials {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .testimonials h2 {
+            color: #77ffd2;
+        }
+
+        .testimonial-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            flex: 1 1 calc(25% - 20px); 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .testimonial-card img {
+            border-radius: 50%;
+            width: 60px; 
+            height: 60px; 
+        }
+
+
+        .cta {
+            text-align: center;
+        }
+
+        footer {
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-brand {
+            text-align: left;
+        }
+
+        .footer-brand h3 {
+            margin: 0;
+        }
+
+        .footer-brand span {
+            color: #ffcc00;
+        }
+
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-col {
+            margin: 0 20px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+        }
+
+        .legal-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .centered-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(to right, #9C27B0, #E91E63);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .centered-button:hover {
+            background-color: #0056b3; /* Darker color on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#ffffff" viewBox="0 0 24 24">
+                    <path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm0 2.8L18 10v9h-2v-6H8v6H6v-9l6-7.2z"/>
+                </svg>
+                <h1 class="logo-text">AI <span>Fraud</span>Shield</h1>
+            </div>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#demo">Demo: Transaction Input</a>
+            </nav>
+        </div>
+        <div class="hero-content">
+            <h2>Advanced Fraud Detection</h2>
+            <p class="subtitle">Real-time AI-powered transaction monitoring to protect your business</p>
+            <button class="cta-button">Request Demo</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="features">
+            <h2>🚀 Features</h2>
+            <ul class="features-list">
+                <li><strong>Real-time Prediction:</strong> Instantly detect fraudulent transactions using machine learning.</li>
+                <li><strong>Secure Input:</strong> User data is processed locally for enhanced privacy and safety.</li>
+                <li><strong>Explainable Model:</strong> Based on 30+ features including V1–V28 and transaction amount.</li>
+                <li><strong>Simple Interface:</strong> Easy-to-use input form for quick testing.</li>
+                <li><strong>FastAPI Backend:</strong> Lightweight, fast, and scalable backend powered by FastAPI.</li>
+            </ul>
+        </section>
+
+        <section class="hero" id="how-it-works">
+            <h2>How It Works</h2>
+            <p>This app uses a machine learning model trained on real-world credit card transaction data to detect fraud.</p>
+            
+            <ol>
+                <li><strong>Step 1:</strong> Scroll down to the <a href="#demo" style="color:rgb(14, 232, 236);">Demo: Transaction Input</a> section.</li>
+                <li><strong>Step 2:</strong> Fill in the required fields:
+                    <ul>
+                        <li><strong>Time:</strong> Time of the transaction in seconds since the first recorded transaction.</li>
+                        <li><strong>V1 to V28:</strong> These are anonymized features derived from PCA (you can input test values).</li>
+                        <li><strong>Amount:</strong> The transaction amount in USD or your currency.</li>
+                    </ul>
+                </li>
+                <li><strong>Step 3:</strong> Click the <strong>"Check Transaction"</strong> button.</li>
+                <li><strong>Step 4:</strong> The system will instantly tell you whether the transaction is <span style="color:rgb(1, 235, 1);"><strong>Safe</strong></span> or <span style="color:#ff3b3b;"><strong>Fraudulent</strong></span>.</li>
+            </ol>
+
+            <p>You can test it with your own data or use sample values for demonstration. This is a demo tool and not intended for production financial use.</p>
+        </section>
+
+        <section class="transaction-form" id="demo">
+            <div style="text-align: center;">
+                <h2>Demo: Transaction Input</h2>
+                <p>Enter the transaction details below to check if it’s fraudulent or not using our AI-powered detection system.</p>
+            </div>
+            <form id="fraudForm">
+                <div class="input-grid scrollable-form">
+                    <div class="input-group">
+                        <label for="time">Transaction Time:</label>
+                        <input type="number" id="time" name="time" step="any" required />
+                    </div>
+
+                    <!-- V1 to V28 -->
+                    <div class="input-group">
+                        <label for="v1">V1:</label>
+                        <input type="number" id="v1" name="v1" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v2">V2:</label>
+                        <input type="number" id="v2" name="v2" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v3">V3:</label>
+                        <input type="number" id="v3" name="v3" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v4">V4:</label>
+                        <input type="number" id="v4" name="v4" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v5">V5:</label>
+                        <input type="number" id="v5" name="v5" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v6">V6:</label>
+                        <input type="number" id="v6" name="v6" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v7">V7:</label>
+                        <input type="number" id="v7" name="v7" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v8">V8:</label>
+                        <input type="number" id="v8" name="v8" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v9">V9:</label>
+                        <input type="number" id="v9" name="v9" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v10">V10:</label>
+                        <input type="number" id="v10" name="v10" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v11">V11:</label>
+                        <input type="number" id="v11" name="v11" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v12">V12:</label>
+                        <input type="number" id="v12" name="v12" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v13">V13:</label>
+                        <input type="number" id="v13" name="v13" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v14">V14:</label>
+                        <input type="number" id="v14" name="v14" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v15">V15:</label>
+                        <input type="number" id="v15" name="v15" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v16">V16:</label>
+                        <input type="number" id="v16" name="v16" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v17">V17:</label>
+                        <input type="number" id="v17" name="v17" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v18">V18:</label>
+                        <input type="number" id="v18" name="v18" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v19">V19:</label>
+                        <input type="number" id="v19" name="v19" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v20">V20:</label>
+                        <input type="number" id="v20" name="v20" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v21">V21:</label>
+                        <input type="number" id="v21" name="v21" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v22">V22:</label>
+                        <input type="number" id="v22" name="v22" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v23">V23:</label>
+                        <input type="number" id="v23" name="v23" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v24">V24:</label>
+                        <input type="number" id="v24" name="v24" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v25">V25:</label>
+                        <input type="number" id="v25" name="v25" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v26">V26:</label>
+                        <input type="number" id="v26" name="v26" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v27">V27:</label>
+                        <input type="number" id="v27" name="v27" step="any" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="v28">V28:</label>
+                        <input type="number" id="v28" name="v28" step="any" required />
+                    </div>
+
+                    <!-- Transaction Amount -->
+                    <div class="input-group">
+                        <label for="amount">Transaction Amount:</label>
+                        <input type="number" id="amount" name="amount" step="any" required />
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit">Check Transaction</button>
+                </div>
+
+            </form>
+            <div id="result" class="result-box"></div>
+        </section>
+
+        <section class="testimonials">
+            <h2>Customer Testimonials</h2>
+            <div class="testimonial-container">
+                <div class="testimonial-card">
+                    <h3>Sarah A.</h3>
+                    <p>“This platform made fraud detection effortless. The UI is intuitive, and their support team is fantastic!”</p>
+                    <p>⭐⭐⭐⭐⭐</p>
+                </div>
+
+                <div class="testimonial-card">
+                    <h3>David M.</h3>
+                    <p>“Reliable, fast, and accurate. I trust this tool for every financial analysis in my workflow.”</p>
+                    <p>⭐⭐⭐⭐⭐</p>
+                </div>
+
+                <div class="testimonial-card">
+                    <h3>Aisha K.</h3>
+                    <p>“Incredible experience! The system flagged fraudulent transactions I would’ve missed. Highly recommended.”</p>
+                    <p>⭐⭐⭐⭐⭐</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="cta">
+            <h2>Ready to Protect Your Business?</h2>
+            <p>Get started with our fraud detection system today and reduce your risk with our advanced AI technology.</p>
+            <button onclick="alert('Demo feature coming soon!')" class="centered-button">Start Free Trial</button>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>AI Fraud<span>Shield</span></h3>
+                <p>Protecting your transactions with AI</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="#">Features</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">API</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <a href="#">Documentation</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Case Studies</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Careers</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 AI FraudShield. All rights reserved.</p>
+            <div class="legal-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/script.js" defer></script>
+</body>
+</html>
